@@ -10,7 +10,7 @@ RUN apt-get update -qq && \
     apt-get install -y osm2pgsql postgresql-postgis postgresql-postgis-scripts \
                        pkg-config libicu-dev git wget python3-pip && \
     useradd -d $USERHOME -s /bin/bash -m $USERNAME && \
-    mkdir -p $USERHOME && mkdir -p /nominatim-data \
+    mkdir -p $USERHOME && mkdir -p /nominatim-data && \
     chown -R $USERNAME:$USERNAME $USERHOME
 
 USER $USERNAME
