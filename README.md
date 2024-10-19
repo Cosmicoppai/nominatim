@@ -52,3 +52,9 @@ To update the OpenStreetMap data:
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 Build the setup for fun and quick testing and deployment, a lot of things required to make it production ready.
+
+## Links
+- https://nominatim.org/release-docs/develop/admin/Install-on-Ubuntu-24/
+- https://nominatim.org/release-docs/develop/admin/Import/
+- https://wiki.openstreetmap.org/wiki/Planet.osm#Planet.osm_mirrors
+- https://video.osgeo.org/w/9cZiX3fMCtpPwhZgRw3oqa
