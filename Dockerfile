@@ -11,9 +11,12 @@ RUN apt-get update -qq && \
                        pkg-config libicu-dev git wget python3-pip && \
     useradd -d $USERHOME -s /bin/bash -m $USERNAME && \
     mkdir -p $USERHOME && mkdir -p /nominatim-data && \
+    chown -R $USERNAME:$USERNAME /nominatim-data && \
+    chmod -R 755 /nominatim-data && \
     chown -R $USERNAME:$USERNAME $USERHOME
 
 WORKDIR $USERHOME
+USER $USERNAME
 
 
 RUN git clone --depth=1 https://github.com/openstreetmap/Nominatim.git && \
@@ -22,15 +25,11 @@ RUN git clone --depth=1 https://github.com/openstreetmap/Nominatim.git && \
     pip install --user --upgrade pip --break-system-packages && \
     pip install --user psycopg[binary] falcon uvicorn gunicorn --break-system-packages && \
     pip install --user -e ./packaging/nominatim-db --break-system-packages && \
-    pip install --user -e ./packaging/nominatim-api --break-system-packages && \
-    chown -R $USERNAME:$USERNAME /nominatim-data && \
-    chmod -R 755 $USERHOME/Nominatim/data /nominatim-data
+    pip install --user -e ./packaging/nominatim-api --break-system-packages
 
 ENV PATH="$USERHOME/.local/bin:$PATH"
 
 COPY --chown=$USERNAME:$USERNAME ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-USER $USERNAME
 
 ENTRYPOINT ["/entrypoint.sh"]

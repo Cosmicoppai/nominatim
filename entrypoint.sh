@@ -29,4 +29,4 @@ if [ ! -f ./data.pbf ]; then
 fi
 
 
-exec gunicorn -b 0.0.0.0:8080 -w 4 -k uvicorn.workers.UvicornWorker nominatim_api.server.falcon.server:run_wsgi
+exec gunicorn -b 0.0.0.0:8080 -w 64 -k uvicorn.workers.UvicornWorker nominatim_api.server.falcon.server:run_wsgi
