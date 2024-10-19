@@ -30,6 +30,6 @@ ENV PATH="$USERHOME/.local/bin:$PATH"
 COPY --chown=$USERNAME:$USERNAME ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-RUN chmod -R 755 $USERHOME && chmod 755 $USERHOME/Nominatim/data
+RUN chmod -R 755 $USERHOME/Nominatim/data /nominatim-data
 
 ENTRYPOINT ["/entrypoint.sh"]
