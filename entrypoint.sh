@@ -9,9 +9,13 @@ done
 
 cd /nominatim-data
 
+if [[ ! $PBF_URL ]]; then
+  echo "Meh, pass some shit to load. add PBF_URL in .env or pass via -e"
+fi
 
-if [ ! -f ./monaco-latest.osm.pbf ]; then
-    wget -O monaco-latest.osm.pbf https://download.geofabrik.de/europe/monaco-latest.osm.pbf
+
+if [ ! -f ./data.pbf ]; then
+    wget -O data.pbf $PBF_URL
     wget https://nominatim.org/data/wikimedia-importance.csv.gz
     wget -O secondary_importance.sql.gz https://nominatim.org/data/wikimedia-secondary-importance.sql.gz
     wget https://nominatim.org/data/gb_postcodes.csv.gz
@@ -19,7 +23,7 @@ if [ ! -f ./monaco-latest.osm.pbf ]; then
 
     echo "Starting Nominatim import..."
     NOMINATIM_DATABASE_DSN="pgsql:host=pg;dbname=nominatim;user=${USERNAME};password=${POSTGRES_PASSWORD}" nominatim import \
-    --osm-file ./monaco-latest.osm.pbf \
+    --osm-file ./data.pbf \
     --project-dir . \
     2>&1 | tee setup.log
 fi
