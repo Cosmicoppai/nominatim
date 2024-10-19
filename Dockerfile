@@ -10,26 +10,25 @@ RUN apt-get update -qq && \
     apt-get install -y osm2pgsql postgresql-postgis postgresql-postgis-scripts \
                        pkg-config libicu-dev git wget python3-pip && \
     useradd -d $USERHOME -s /bin/bash -m $USERNAME && \
-    mkdir -p $USERHOME && \
+    mkdir -p $USERHOME && mkdir -p /nominatim-data \
     chown -R $USERNAME:$USERNAME $USERHOME
 
 USER $USERNAME
 WORKDIR $USERHOME
 
 
-RUN git clone https://github.com/openstreetmap/Nominatim.git && \
+RUN git clone --depth=1 https://github.com/openstreetmap/Nominatim.git && \
     cd Nominatim && \
     wget -O data/country_osm_grid.sql.gz https://nominatim.org/data/country_grid.sql.gz && \
     pip install --user --upgrade pip --break-system-packages && \
     pip install --user psycopg[binary] falcon uvicorn gunicorn --break-system-packages && \
     pip install --user -e ./packaging/nominatim-db --break-system-packages && \
-    pip install --user -e ./packaging/nominatim-api --break-system-packages
+    pip install --user -e ./packaging/nominatim-api --break-system-packages && \
+    chmod -R 755 $USERHOME/Nominatim/data /nominatim-data
 
 ENV PATH="$USERHOME/.local/bin:$PATH"
 
 COPY --chown=$USERNAME:$USERNAME ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-RUN chmod -R 755 $USERHOME/Nominatim/data /nominatim-data
 
 ENTRYPOINT ["/entrypoint.sh"]
