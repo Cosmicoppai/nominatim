@@ -18,7 +18,7 @@ services:
     volumes:
       - ./pg/postgresql.conf:/etc/postgresql/postgresql.conf
       - ./pg/init-nominatim.sh:/docker-entrypoint-initdb.d/init-nominatim.sh
-      - pg-data:/var/lib/postgresql/data/
+      - ./pg-data:/var/lib/postgresql/data/
     restart: always
 
   nginx:
@@ -30,8 +30,3 @@ services:
     depends_on:
       - nominatim
     restart: always
-
-
-
-volumes:
-  pg-data:
