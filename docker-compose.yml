@@ -19,6 +19,7 @@ services:
       - ./pg/postgresql.conf:/etc/postgresql/postgresql.conf
       - ./pg/init-nominatim.sh:/docker-entrypoint-initdb.d/init-nominatim.sh
       - ./pg-data:/var/lib/postgresql/data/
+    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
     restart: always
 
   nginx:
