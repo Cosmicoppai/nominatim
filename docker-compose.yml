@@ -10,6 +10,11 @@ services:
     volumes:
       - ./nominatim-data:/nominatim-data/
     restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
 
   pg:
     image: postgis/postgis:17-3.4
@@ -21,6 +26,11 @@ services:
       - ./pg-data:/var/lib/postgresql/data/
     command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
 
   nginx:
     image: nginx:1.27-alpine
@@ -30,4 +40,9 @@ services:
       - ./nginx:/etc/nginx/conf.d
     depends_on:
       - nominatim
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
     restart: always
