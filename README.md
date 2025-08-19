@@ -1,10 +1,12 @@
 # Nominatim with PostgreSQL 17 Container
 
 This project provides a containerized setup for running Nominatim with PostgreSQL 17, offering a powerful and flexible geocoding solution.
+Along with daily sync from the upstream.
 
 ## Overview
 
-Nominatim is an open-source tool to search OpenStreetMap data by name and address (geocoding) and to generate synthetic addresses of OSM points (reverse geocoding). This setup uses PostgreSQL 17 as the database backend, providing the latest features and performance improvements.
+Nominatim is an open-source tool to search OpenStreetMap data by name and address (geocoding) and to generate synthetic addresses of OSM points (reverse geocoding).
+This setup uses PostgreSQL 17 as the database backend, providing the latest features and performance improvements.
 
 ## Prerequisites
 

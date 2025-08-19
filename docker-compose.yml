@@ -46,3 +46,19 @@ services:
         max-size: "100m"
         max-file: "3"
     restart: always
+
+  syncer:
+    build:
+      dockerfile: syncer/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./nominatim-data:/nominatim-data/
+    depends_on:
+      - nominatim
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+    restart: always
